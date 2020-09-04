@@ -6,7 +6,7 @@ const addContactOperation = (contact) => async (dispatch) => {
   // dispatch(contactsActions.addContactReequest()); // сброс ошибки (который делается не так)
   try {
     const result = await axios.post(
-      "https://hw-07-async-redux.firebase1io.com/contacts.json",
+      "https://hw-07-async-redux.firebaseio.com/contacts.json",
       contact
     );
     dispatch(
