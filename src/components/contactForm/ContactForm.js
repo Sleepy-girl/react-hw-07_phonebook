@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import contactsActions from "../../redux/contacts/contactsActions";
+import contactsOperation from "../../redux/operations/contactsOperations";
 import styles from "./contactForm.module.css";
 
 class ContactForm extends Component {
@@ -8,6 +9,10 @@ class ContactForm extends Component {
     name: "",
     number: "",
   };
+
+  componentDidMount() {
+    this.props.getContactOperation();
+  }
 
   handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -23,7 +28,7 @@ class ContactForm extends Component {
         this.props.onAlert();
       }, 1000);
     } else {
-      this.props.onAddContact({ ...this.state });
+      this.props.addContactOperation({ ...this.state });
       this.reset();
     }
   };
@@ -79,7 +84,9 @@ const mapStateToProps = (state) => {
   };
 };
 const mapDispatchToProps = {
-  onAddContact: contactsActions.addToContacts,
+  // onAddContact: contactsActions.addToContacts,
+  addContactOperation: contactsOperation.addContactOperation,
+  getContactOperation: contactsOperation.getContactOperation,
   onAlert: contactsActions.toggleAlert,
 };
 // const mapDispatchToProps = (dispatch) => {

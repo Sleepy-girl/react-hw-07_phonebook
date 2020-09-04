@@ -1,17 +1,44 @@
 import constantsTypes from "./constantsTypes";
-import { v4 as uuidv4 } from "uuid";
-
-const addToContacts = (contact) => ({
-  type: constantsTypes.ADD,
-  payload: { ...contact, id: uuidv4() },
-});
 
 const removeContact = (id) => ({
-  type: constantsTypes.REMOVE,
+  type: constantsTypes.REMOVE_CONTACT,
   payload: {
     id,
   },
 });
+
+const addContactReequest = () => ({
+  type: constantsTypes.ADD_REQUEST,
+});
+
+const addContactSuccess = (contact) => ({
+  type: constantsTypes.ADD_SUCCESS,
+  payload: { ...contact },
+});
+
+const addErrorContact = (error) => ({
+  type: constantsTypes.ADD_ERROR,
+  payload: error,
+});
+
+//------------------------------------
+
+const getContactReequest = (contact) => ({
+  type: constantsTypes.GET_REQUEST,
+  payload: { ...contact },
+});
+
+const getContactSuccess = (items) => ({
+  type: constantsTypes.GET_SUCCESS,
+  payload: items,
+});
+
+const getErrorContact = (error) => ({
+  type: constantsTypes.GET_ERROR,
+  payload: error,
+});
+
+//------------------------------------
 
 const getFilterValue = (filter) => ({
   type: constantsTypes.FILTER_VALUE,
@@ -24,9 +51,24 @@ const toggleAlert = () => ({
   type: constantsTypes.EXIST_CONTACT,
 });
 
+const errorAction = (error) => ({
+  type: constantsTypes.ADD_ERROR,
+  payload: error,
+});
+
 export default {
-  addToContacts,
   removeContact,
+  addErrorContact,
+
+  addContactReequest,
+  addContactSuccess,
+  addErrorContact,
+
+  getContactReequest,
+  getContactSuccess,
+  getErrorContact,
+
   getFilterValue,
   toggleAlert,
+  errorAction,
 };

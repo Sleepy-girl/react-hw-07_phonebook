@@ -1,13 +1,31 @@
 import { combineReducers } from "redux";
 import constantsTypes from "./constantsTypes";
 
-const itemsReduser = (state = [], action) => {
-  switch (action.type) {
-    case constantsTypes.ADD:
-      return [...state, action.payload];
+// const initialState = [],
 
-    case constantsTypes.REMOVE:
-      return state.filter((item) => item.id !== action.payload.id);
+const itemsReduser = (state = [], { type, payload }) => {
+  switch (type) {
+    case constantsTypes.GET_SUCCESS:
+      return payload;
+
+    case constantsTypes.ADD_SUCCESS:
+      return [...state, payload];
+
+    case constantsTypes.REMOVE_CONTACT:
+      return [...state.filter((item) => item.id !== payload.id)];
+
+    default:
+      return state;
+  }
+};
+
+const errorReducer = (state = "", action) => {
+  switch (action.type) {
+    case constantsTypes.ADD_ERROR:
+      return action.payload;
+
+    case constantsTypes.ADD_REQUEST:
+      return (state = "");
 
     default:
       return state;
@@ -38,4 +56,5 @@ export default combineReducers({
   items: itemsReduser,
   filter: filterReduser,
   alert: alertReducer,
+  error: errorReducer,
 });
