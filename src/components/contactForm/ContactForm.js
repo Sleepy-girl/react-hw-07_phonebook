@@ -48,31 +48,37 @@ class ContactForm extends Component {
 
     return (
       <>
-        <form onSubmit={this.handleSubmit} className={styles.form}>
-          <label className={styles.label}>
-            Name:
-            <input
-              type="text"
-              name="name"
-              value={name}
-              onChange={this.handleInputChange}
-              className={styles.input}
-            />
-          </label>
-          <label className={styles.label}>
-            Number:
-            <input
-              type="text"
-              name="number"
-              value={number}
-              onChange={this.handleInputChange}
-              className={styles.input}
-            />
-          </label>
-          <button type="submit" className={styles.btnAddContant}>
-            Add contact
-          </button>
-        </form>
+        {this.props.loading ? (
+          <h2>Loading...</h2>
+        ) : (
+          <form onSubmit={this.handleSubmit} className={styles.form}>
+            <label className={styles.label}>
+              Name:
+              <input
+                type="text"
+                name="name"
+                value={name}
+                onChange={this.handleInputChange}
+                className={styles.input}
+              />
+            </label>
+            <label className={styles.label}>
+              Number:
+              <input
+                type="text"
+                name="number"
+                value={number}
+                onChange={this.handleInputChange}
+                className={styles.input}
+              />
+            </label>
+            <button type="submit" className={styles.btnAddContant}>
+              Add contact
+            </button>
+          </form>
+        )}
+
+        {this.props.error && <h2>ERROR!</h2>}
       </>
     );
   }
@@ -81,10 +87,11 @@ class ContactForm extends Component {
 const mapStateToProps = (state) => {
   return {
     items: state.contacts.items,
+    error: state.contacts.error,
+    loading: state.contacts.loading,
   };
 };
 const mapDispatchToProps = {
-  // onAddContact: contactsActions.addToContacts,
   addContactOperation: contactsOperation.addContactOperation,
   getContactOperation: contactsOperation.getContactOperation,
   onAlert: contactsActions.toggleAlert,

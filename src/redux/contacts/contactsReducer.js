@@ -19,13 +19,17 @@ const itemsReduser = (state = [], { type, payload }) => {
   }
 };
 
-const errorReducer = (state = "", action) => {
+const errorReducer = (state = null, action) => {
   switch (action.type) {
     case constantsTypes.ADD_ERROR:
+    case constantsTypes.GET_ERROR:
+    case constantsTypes.REMOVE_ERROR:
       return action.payload;
 
     case constantsTypes.ADD_REQUEST:
-      return (state = "");
+    case constantsTypes.GET_REQUEST:
+    case constantsTypes.REMOVE_CONTACT:
+      return null;
 
     default:
       return state;
@@ -52,9 +56,23 @@ const alertReducer = (state = false, action) => {
   }
 };
 
+const loadingReducer = (state = false, { type }) => {
+  switch (type) {
+    case constantsTypes.LOADER_ON:
+      return true;
+
+    case constantsTypes.LOADER_OFF:
+      return false;
+
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   items: itemsReduser,
   filter: filterReduser,
   alert: alertReducer,
   error: errorReducer,
+  loading: loadingReducer,
 });

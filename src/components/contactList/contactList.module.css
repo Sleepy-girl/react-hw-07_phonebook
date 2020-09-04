@@ -15,6 +15,12 @@
 }
 
 /*  */
+/* .wrapper {
+  width: 660px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+} */
 
 .contactListItem {
   display: flex;

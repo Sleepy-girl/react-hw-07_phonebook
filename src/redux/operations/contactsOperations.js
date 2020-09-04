@@ -2,11 +2,11 @@ import axios from "axios";
 import contactsActions from "../contacts/contactsActions";
 
 const addContactOperation = (contact) => async (dispatch) => {
-  // добавить лоадер On
+  dispatch(contactsActions.loaderOn());
   // dispatch(contactsActions.addContactReequest()); // сброс ошибки (который делается не так)
   try {
     const result = await axios.post(
-      "https://hw-07-async-redux.firebaseio.com/contacts.json",
+      "https://hw-07-async-redux.firebase1io.com/contacts.json",
       contact
     );
     dispatch(
@@ -19,13 +19,13 @@ const addContactOperation = (contact) => async (dispatch) => {
     console.log("error-add", error);
     dispatch(contactsActions.addErrorContact(error));
   } finally {
-    // LoaderOff()
+    dispatch(contactsActions.loaderOff());
   }
 };
 
 const getContactOperation = () => async (dispatch) => {
-  // добавить лоадер On
-  // dispatch(contactsActions.addToContacts()); // сброс ошибки (который делается не так)
+  dispatch(contactsActions.loaderOn());
+  // dispatch(contactsActions.()); // сброс ошибки (который делается не так)
   try {
     const result = await axios.get(
       "https://hw-07-async-redux.firebaseio.com/contacts.json"
@@ -37,30 +37,24 @@ const getContactOperation = () => async (dispatch) => {
     console.log("error-get", error);
     dispatch(contactsActions.getErrorContact(error));
   } finally {
-    // LoaderOff()
+    dispatch(contactsActions.loaderOff());
   }
 };
 
 const removeContactOperation = (id) => async (dispatch) => {
+  dispatch(contactsActions.loaderOn());
+
   try {
     const result = await axios.delete(
       `https://hw-07-async-redux.firebaseio.com/contacts/${id}.json`
     );
     dispatch(contactsActions.removeContact(id));
   } catch (error) {
-    // error
+    console.log("error-remove", error);
+    dispatch(contactsActions.removeErrorContact(error));
   } finally {
-    // LoaderOff()
+    dispatch(contactsActions.loaderOff());
   }
-  //   dispatch(actions.removeContactRequest());
-  //   axios
-  //     .delete(https://redux-async.firebaseio.com/contacts/${id}.json)
-  // .then(() => {
-  //   console.log(id,"SuccessID")
-  //   dispatch(actions.removeContactSuccess(id))})
-  //     .catch(error => {
-  //       console.log(error,"error")
-  //       dispatch(actions.removeContactError(error))});
 };
 
 export default {
